@@ -1,0 +1,4 @@
+name = Yandex.Share Ex
+description = Module provide interface to insert block with new Yandex.Share buttons.
+version = 7.x-1.x-dev
+core = 7.x
