@@ -29,6 +29,7 @@ function yasharex_menu() {
 function yasharex_block_info() {
   $blocks['yasharex'] = array(
     'info' => t('Yandex.Share Ex'),
+    'cache' => DRUPAL_NO_CACHE,
     'status' => FALSE,
     'weight' => 10,
   );
