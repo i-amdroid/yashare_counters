@@ -109,9 +109,6 @@ function yasharex_services_list() {
       'odnoklassniki' => t('Odnoklassniki'),
       'moimir' => t('Moi mir'),
       'gplus' => t('Google Plus'),
-      'lj' => t('Livejournal'),
-      'friendfeed' => t('FriendFeed'),
-      'moikrug' => t('Moi krug'),
     );
 
     $services = array();
