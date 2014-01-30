@@ -1,24 +1,24 @@
 <?php
 /**
  * @file
- * Main file for the Yandex.Share Ex module.
+ * Main file for the Yandex.Share with Counters module.
  */
 
-define('YASHAREX_SMALL', 1);
+define('YASHARE_COUNTERS_SMALL', 1);
 
 /**
   * Implements hook_menu(). 
   */
-function yasharex_menu() {
+function yashare_counters_menu() {
   $items = array();
-  $items['admin/config/services/yasharex'] = array(
-    'title' => 'Yandex.Share Ex',
-    'description' => 'Adjust Yandex.Share Ex buttons options',
+  $items['admin/config/services/yashare_counters'] = array(
+    'title' => 'Yandex.Share with Counters',
+    'description' => 'Adjust Yandex.Share buttons options',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('yasharex_admin_settings'),
+    'page arguments' => array('yashare_counters_admin_settings'),
     'access arguments' => array('administer site configuration'),
     'type' => MENU_NORMAL_ITEM,
-    'file' => 'yasharex.admin.inc',
+    'file' => 'yashare_counters.admin.inc',
   );
   return $items;
 }
@@ -26,9 +26,9 @@ function yasharex_menu() {
 /**
   * Implements hook_block_info(). 
   */
-function yasharex_block_info() {
-  $blocks['yasharex'] = array(
-    'info' => t('Yandex.Share Ex'),
+function yashare_counters_block_info() {
+  $blocks['yashare_counters'] = array(
+    'info' => t('Yandex.Share with Counters'),
     'cache' => DRUPAL_NO_CACHE,
     'status' => FALSE,
     'weight' => 10,
@@ -39,12 +39,12 @@ function yasharex_block_info() {
 /**
   * Implements hook_block_view(). 
   */
-function yasharex_block_view($delta = '') {
+function yashare_counters_block_view($delta = '') {
   $block = array();
-  if ($delta == 'yasharex') { 
+  if ($delta == 'yashare_counters') { 
     $block['subject'] = t('Share');
     $block['content'] = array(
-      '#markup' => yasharex_block_content(),
+      '#markup' => yashare_counters_block_content(),
       '#attached' => array(
         'js' => array(
           '//yandex.st/share/cnt.share.js' => array(
@@ -57,7 +57,7 @@ function yasharex_block_view($delta = '') {
   return $block;
 }
 
-function yasharex_block_content() {
+function yashare_counters_block_content() {
   global $language_content;
   $lang = $language_content->language;
   
@@ -65,8 +65,8 @@ function yasharex_block_content() {
   $block_content .= ' data-yashareL10n="' . $lang . '"';
 
   $service_list = ' data-yashareQuickServices="';
-  foreach (yasharex_services_list() as $service_id => $service_name) {
-    if (variable_get('yasharex_service_' . $service_id . '_enabled', 1)) {
+  foreach (yashare_counters_services_list() as $service_id => $service_name) {
+    if (variable_get('yashare_counters_service_' . $service_id . '_enabled', 1)) {
       $service_list .= $service_id . ',';
     }
   }
@@ -74,7 +74,7 @@ function yasharex_block_content() {
   $block_content .= $service_list;
   //$block_content .= ' data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,gplus"';
 
-  if (variable_get('small_size', YASHAREX_SMALL)) {
+  if (variable_get('small_size', YASHARE_COUNTERS_SMALL)) {
     $block_content .= ' data-yashareType="small"';
   }
   $block_content .= ' data-yashareTheme="counter" /></div>';
@@ -84,10 +84,10 @@ function yasharex_block_content() {
 /**
  * Implements hook_theme().
  */
-function yasharex_theme() {
+function yashare_counters_theme() {
   return array(
-    'yasharex_admin_settings_services_table' => array(
-      'file' => 'yasharex.admin.inc',
+    'yashare_counters_admin_settings_services_table' => array(
+      'file' => 'yashare_counters.admin.inc',
       'render element' => 'form',
     ),
   );
@@ -96,7 +96,7 @@ function yasharex_theme() {
 /**
  * Internal function.
  */
-function yasharex_services_list() {
+function yashare_counters_services_list() {
   $services = &drupal_static(__FUNCTION__, NULL);
 
   if (!isset($services)) {
@@ -115,7 +115,7 @@ function yasharex_services_list() {
     $weights = array();
 
     foreach ($raw_services as $service_id => $service_name) {
-      $weights[$service_id] = variable_get('yasharex_service_' . $service_id . '_weight', 0);
+      $weights[$service_id] = variable_get('yashare_counters_service_' . $service_id . '_weight', 0);
     }
     asort($weights);
 

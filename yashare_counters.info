@@ -1,0 +1,7 @@
+name = Yandex.Share with Counters
+description = Module inserts block with new Yandex.Share buttons (with counters).
+version = 7.x-1.x-dev
+core = 7.x
+configure = admin/config/services/yashare_counters
+
+stylesheets[all][]   = css/yashare_counters.css
