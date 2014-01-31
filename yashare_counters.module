@@ -4,6 +4,9 @@
  * Main file for the Yandex.Share with Counters module.
  */
 
+// Include field hooks.
+module_load_include('inc', 'yashare_counters', 'yashare_counters.fields');
+
 define('YASHARE_COUNTERS_SMALL', 1);
 
 /**
