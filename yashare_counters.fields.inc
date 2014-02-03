@@ -43,6 +43,20 @@ function yashare_counters_field_formatter_info() {
 function yashare_counters_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
 
+  $link = NULL;
+  $title = NULL;
+  $description = NULL;
+  $image = NULL;
+
+  if ($entity_type == 'node') { 
+    $link = 'node/' . $entity->nid;
+    $title = $entity->title;
+  }
+  elseif ($entity_type == 'taxonomy_term') {
+    $link = 'taxonomy/term/' . $entity->tid;
+    $title = $entity->name;
+  }
+
   switch ($display['type']) {
     case 'yashare_counters_default_formatter':
       foreach ($items as $delta => $item) {
@@ -56,7 +70,7 @@ function yashare_counters_field_formatter_view($entity_type, $entity, $field, $i
               ),
             ),
           ),
-          '#value' => yashare_counters_block_content(),
+          '#value' => yashare_counters_block_content($link, $title, $description, $image),
         );
       }
       break;

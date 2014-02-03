@@ -60,12 +60,25 @@ function yashare_counters_block_view($delta = '') {
   return $block;
 }
 
-function yashare_counters_block_content() {
+function yashare_counters_block_content($link = NULL, $title = NULL, $description = NULL, $image = NULL) {
   global $language_content;
   $lang = $language_content->language;
   
   $block_content = '<div class="yashare-auto-init"';
   $block_content .= ' data-yashareL10n="' . $lang . '"';
+
+  if ($link) {
+    $block_content .= ' data-yashareLink="' . url(drupal_get_path_alias($link), array('absolute' => TRUE)) . '"';
+  }
+  if ($title) {
+    $block_content .= ' data-yashareTitle="' . check_plain($title) . '"';
+  }
+  if ($description) {
+    $block_content .= ' data-yashareDescription="' . check_plain($description) . '"';
+  }
+  if ($image) {
+    $block_content .= ' data-yashareImage="' . $image . '"';
+  }
 
   $service_list = ' data-yashareQuickServices="';
   foreach (yashare_counters_services_list() as $service_id => $service_name) {
