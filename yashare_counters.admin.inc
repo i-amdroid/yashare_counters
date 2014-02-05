@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Administrative page forms and functions for the Yandex.Share with Counters module.
+ * Administrative page forms and functions for the Yandex.Share with Counters.
  */
 
 /**
@@ -14,11 +14,10 @@ function yashare_counters_admin_settings() {
   );
 
   $form['style']['small_size'] = array(
-    '#type' => 'checkbox', 
+    '#type' => 'checkbox',
     '#title' => t('Use small buttons.'),
-    '#default_value' => variable_get('small_size', YASHARE_COUNTERS_SMALL)
+    '#default_value' => variable_get('yashare_counters_small_size', YASHARE_COUNTERS_SMALL),
   );
-
 
   $form['services'] = array(
     '#type' => 'fieldset',
@@ -44,13 +43,14 @@ function yashare_counters_admin_settings() {
   return system_settings_form($form, TRUE);
 }
 
-
+/**
+ * Theme function for settings table.
+ */
 function theme_yashare_counters_admin_settings_services_table($vars) {
   $form = $vars['form'];
 
   $header = array(
     array('data' => t('Service name'), 'colspan' => 2),
-    //t('Weight'),
   );
   $rows = array();
 
@@ -65,7 +65,11 @@ function theme_yashare_counters_admin_settings_services_table($vars) {
     );
   }
 
-  $output = theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('id' => 'yashare-counters-services')));
+  $output = theme('table', array(
+    'header' => $header,
+    'rows' => $rows,
+    'attributes' => array('id' => 'yashare-counters-services'),
+  ));
   $output .= drupal_render_children($form);
 
   drupal_add_tabledrag('yashare-counters-services', 'order', 'sibling', 'yashare-counters-service-weight');

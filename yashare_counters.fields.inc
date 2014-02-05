@@ -48,7 +48,7 @@ function yashare_counters_field_formatter_view($entity_type, $entity, $field, $i
   $description = NULL;
   $image = NULL;
 
-  if ($entity_type == 'node') { 
+  if ($entity_type == 'node') {
     $link = 'node/' . $entity->nid;
     $title = $entity->title;
   }

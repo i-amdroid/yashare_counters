@@ -3,4 +3,4 @@ description = Module displays new Yandex.Share buttons (with counters).
 core = 7.x
 configure = admin/config/services/yashare_counters
 
-stylesheets[all][]   = css/yashare_counters.css
+stylesheets[all][] = css/yashare_counters.css
