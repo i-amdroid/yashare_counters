@@ -13,7 +13,7 @@ function yashare_counters_admin_settings() {
     '#title' => t('Style'),
   );
 
-  $form['style']['small_size'] = array(
+  $form['style']['yashare_counters_small_size'] = array(
     '#type' => 'checkbox',
     '#title' => t('Use small buttons.'),
     '#default_value' => variable_get('yashare_counters_small_size', YASHARE_COUNTERS_SMALL),
