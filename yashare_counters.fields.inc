@@ -50,7 +50,11 @@ function yashare_counters_field_formatter_view($entity_type, $entity, $field, $i
 
   if ($entity_type == 'node') {
     $link = 'node/' . $entity->nid;
-    $title = $entity->title;
+    $title = $entity->title; 
+    if (isset($entity->field_image)) {
+      $imageArray = (array) $entity->field_image;
+      $image = file_create_url($imageArray['und'][0]['uri']);
+    }
   }
   elseif ($entity_type == 'taxonomy_term') {
     $link = 'taxonomy/term/' . $entity->tid;
