@@ -44,9 +44,8 @@ function yashare_counters_block_info() {
  */
 function yashare_counters_block_configure($delta='') {
   $form = array();
-  switch($delta) {
+  switch ($delta) {
     case 'yashare_counters' :
-      // Text field form element
       $form['fixed_url'] = array(
         '#type' => 'textfield',
         '#title' => t('Use fixed URL for buttons on all pages'),
@@ -62,9 +61,8 @@ function yashare_counters_block_configure($delta='') {
  * Implements hook_block_save().
  */
 function yashare_counters_block_save($delta = '', $edit = array()) {
-  switch($delta) {
-    case 'yashare_counters' :
-      // Saving the WYSIWYG text      
+  switch ($delta) {
+    case 'yashare_counters' :      
       variable_set('yashare_counters_fixed_url', $edit['fixed_url']);
       break;
   }
@@ -87,8 +85,9 @@ function yashare_counters_block_view($delta = '') {
       '#markup' => yashare_counters_block_content($link, $title, $description, $image),
       '#attached' => array(
         'js' => array(
-          '//yandex.st/share/cnt.share.js' => array(
+          '//yastatic.net/share/share.js' => array(
             'type' => 'external',
+            'async' => 'async', // See https://www.drupal.org/node/1664602
           ),
         ),
       ),

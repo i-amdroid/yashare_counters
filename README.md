@@ -16,11 +16,15 @@ CONFIGURATION
 Go to
 Administration » Configuration » Web services » Yandex.Share with Counters,
 and choose style, order and enabled services.
- * Using as block:
-   configure "Yandex.Share with Counters" block on Blocks page and enjoy.
- * Using as field:
-   add field "Yandex.Share with Counters". For existing nodes needs re-save or
-   use module https://github.com/konstantin-komelin/yashare_counters_update
+
+ * Using as block:  
+   Configure "Yandex.Share with Counters" block on Blocks page and enjoy.  
+   There is ability to set fixed URL for all blocks.
+ * Using as field:  
+   Add field "Yandex.Share with Counters". Image field and style for preview
+   image can be selected on Manage Display page. For existing nodes needs
+   re-save or use module
+   https://github.com/konstantin-komelin/yashare_counters_update
 
 Available services
 ------------------

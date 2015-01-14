@@ -33,6 +33,10 @@ function yashare_counters_field_formatter_info() {
     'yashare_counters_default_formatter' => array(
       'label' => t('Default'),
       'field types' => array('yashare_counters_buttons'),
+      'settings' => array(
+        'image_field' => 'field_image',
+        'image_style' => 'thumbnail',
+      ),
     ),
   );
 }
@@ -41,6 +45,7 @@ function yashare_counters_field_formatter_info() {
  * Implements hook_field_formatter_view().
  */
 function yashare_counters_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $settings = $display['settings'];
   $element = array();
 
   $link = NULL;
@@ -50,16 +55,17 @@ function yashare_counters_field_formatter_view($entity_type, $entity, $field, $i
 
   if ($entity_type == 'node') {
     $link = 'node/' . $entity->nid;
-    $title = $entity->title;
-    if (!empty($entity->field_image)) {
-      $imageArray = (array) $entity->field_image;
-      $field_language = field_language($entity_type, $entity, 'field_image', $langcode = NULL);
-      $image = file_create_url($imageArray[$field_language][0]['uri']);
-    }
+    $title = $entity->title;   
   }
   elseif ($entity_type == 'taxonomy_term') {
     $link = 'taxonomy/term/' . $entity->tid;
     $title = $entity->name;
+  }
+
+  if (!empty($entity->$settings['image_field'])) {
+    $images = (array) $entity->$settings['image_field'];
+    $field_language = field_language($entity_type, $entity, $settings['image_field'], $langcode = NULL);
+    $image = image_style_url($settings['image_style'], $images[$field_language][0]['uri']);
   }
 
   switch ($display['type']) {
@@ -70,8 +76,9 @@ function yashare_counters_field_formatter_view($entity_type, $entity, $field, $i
           '#tag' => 'div',
           '#attached' => array(
             'js' => array(
-              '//yandex.st/share/cnt.share.js' => array(
+              '//yastatic.net/share/share.js' => array(
                 'type' => 'external',
+                'async' => 'async', // See https://www.drupal.org/node/1664602
               ),
             ),
           ),
@@ -82,6 +89,90 @@ function yashare_counters_field_formatter_view($entity_type, $entity, $field, $i
   }
 
   return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function yashare_counters_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  $elements = array();
+
+  $options = array();
+  $fields_info = field_info_instances($instance['entity_type'], $instance['bundle']);
+  if (!empty($fields_info)) {
+    foreach ($fields_info as $field_name => $value) {
+      $field_info = field_info_field($field_name);
+      if (in_array($field_info['type'], array('image'))) {
+        $options[$field_name] = $fields_info[$field_name]['label'];
+      }
+    }
+  }
+  else {
+    // Fallback for using image field in views.
+    $fields_info = field_info_field_map();
+    foreach ($fields_info as $field_name => $field_info) {
+      if (in_array($field_info['type'], array('image'))) {
+        $options[$field_name] = $field_name;
+      }
+    }
+  }
+  $elements['image_field'] = array(
+    '#type' => 'select',
+    '#title' => t('Image field'),
+    '#description' => t('Choose image field to use as image to share.'),
+    '#default_value' => $settings['image_field'],
+    '#empty_option' => t('None'),
+    '#options' => $options,
+  );
+
+  $options = image_style_options(FALSE);
+  $elements['image_style'] = array(
+    '#type' => 'select',
+    '#title' => t('Image style'),
+    '#default_value' => $settings['image_style'],
+    '#empty_option' => t('None (original image)'),
+    '#options' => $options,
+    '#states' => array(
+      'invisible' => array(
+        ':input[name="fields[' . $instance['field_name'] . '][settings_edit_form][settings][image_field]"]' => array('value' => ''),
+      ),
+    ),
+  );
+
+  return $elements;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function yashare_counters_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $instance['display'][$view_mode]['settings'];
+  $output = array();
+
+  $field_instances = field_info_instances($instance['entity_type'], $instance['bundle']);
+  if (isset($field_instances[$settings['image_field']])) {
+    $output[] = t('Image field to share: @field', array('@field' => $field_instances[$settings['image_field']]['label']));
+
+    $image_styles = image_style_options(FALSE);
+    // Unset possible 'No defined styles' option.
+    unset($image_styles['']);
+    // Styles could be lost because of enabled/disabled modules that define
+    // their styles in code.
+    if (isset($image_styles[$settings['image_style']])) {
+      $output[] = t('Image style: @style', array('@style' => $image_styles[$settings['image_style']]));
+    }
+    else {
+      $output[] = t('Image style: @style', array('@style' => t('Original image')));
+    }
+  }
+  else {
+    $output[] = t('Image field to share: @field', array('@field' => t('None')));
+  }
+
+  return implode('<br />', $output);
 }
 
 /**
