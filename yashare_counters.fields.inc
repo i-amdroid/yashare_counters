@@ -65,7 +65,12 @@ function yashare_counters_field_formatter_view($entity_type, $entity, $field, $i
   if (!empty($entity->$settings['image_field'])) {
     $images = (array) $entity->$settings['image_field'];
     $field_language = field_language($entity_type, $entity, $settings['image_field'], $langcode = NULL);
-    $image = image_style_url($settings['image_style'], $images[$field_language][0]['uri']);
+    if ($settings['image_style']) {
+      $image = image_style_url($settings['image_style'], $images[$field_language][0]['uri']);
+    }
+    else {
+      $image = file_create_url($images[$field_language][0]['uri']);
+    }
   }
 
   switch ($display['type']) {

@@ -156,7 +156,6 @@ function yashare_counters_services_list() {
   if (!isset($services)) {
     $raw_services = array(
       // Core providers.
-      'yaru' => t('Ya.ru'),
       'vkontakte' => t('Vkontakte'),
       'facebook' => t('Facebook'),
       'twitter' => t('Twitter'),

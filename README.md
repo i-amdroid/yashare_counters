@@ -34,4 +34,3 @@ Available services
  * Odnoklassniki
  * Moi mir
  * Vkontakte
- * Ya.ru
