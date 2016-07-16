@@ -3,7 +3,7 @@ Yandex.Share with Counters
 
 INTRODUCTION
 ------------
-This module displays beautiful share buttons with counters.
+This module displays Yandex.Share buttons with counters.
 
 INSTALLATION
 ------------
@@ -29,8 +29,16 @@ and choose style, order and enabled services.
 Available services
 ------------------
  * Facebook
- * Twitter
+ * Twitter (counters API was removed)
  * Google Plus
  * Odnoklassniki
  * Moi mir
  * Vkontakte
+
+Version comparison
+------------------
+
+1.x - Implements old obsolete API and look.  
+2.x - Implements actual API with new look.
+
+To upgrade from 1.x to 2.x no additional actions required.

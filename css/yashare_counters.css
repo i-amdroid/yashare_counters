@@ -1,3 +1,4 @@
-.b-share-btn__wrap {
+.block-yashare-counters .ya-share2__list_direction_horizontal > .ya-share2__item,
+.field-type-yashare-counters-buttons .ya-share2__list_direction_horizontal > .ya-share2__item {
   margin-bottom: 4px;
 }

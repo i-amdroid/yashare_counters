@@ -62,14 +62,12 @@ function yashare_counters_field_formatter_view($entity_type, $entity, $field, $i
     $title = $entity->name;
   }
 
-  if (!empty($entity->$settings['image_field'])) {
-    $images = (array) $entity->$settings['image_field'];
-    $field_language = field_language($entity_type, $entity, $settings['image_field'], $langcode = NULL);
+  if ($images = field_get_items($entity_type, $entity, $settings['image_field'])) {
     if ($settings['image_style']) {
-      $image = image_style_url($settings['image_style'], $images[$field_language][0]['uri']);
+      $image = image_style_url($settings['image_style'], $images[0]['uri']);
     }
     else {
-      $image = file_create_url($images[$field_language][0]['uri']);
+      $image = file_create_url($images[0]['uri']);
     }
   }
 
@@ -81,7 +79,7 @@ function yashare_counters_field_formatter_view($entity_type, $entity, $field, $i
           '#tag' => 'div',
           '#attached' => array(
             'js' => array(
-              '//yastatic.net/share/share.js' => array(
+              'https://yastatic.net/share2/share.js' => array(
                 'type' => 'external',
                 'async' => 'async', // See https://www.drupal.org/node/1664602
               ),

@@ -85,7 +85,7 @@ function yashare_counters_block_view($delta = '') {
       '#markup' => yashare_counters_block_content($link, $title, $description, $image),
       '#attached' => array(
         'js' => array(
-          '//yastatic.net/share/share.js' => array(
+          'https://yastatic.net/share2/share.js' => array(
             'type' => 'external',
             'async' => 'async', // See https://www.drupal.org/node/1664602
           ),
@@ -103,23 +103,23 @@ function yashare_counters_block_content($link = NULL, $title = NULL, $descriptio
   global $language_content;
   $lang = $language_content->language;
 
-  $block_content = '<div class="yashare-auto-init"';
-  $block_content .= ' data-yashareL10n="' . $lang . '"';
+  $block_content = '<div class="ya-share2"';
+  $block_content .= ' data-lang="' . $lang . '"';
 
   if ($link) {
-    $block_content .= ' data-yashareLink="' . url(drupal_get_path_alias($link), array('absolute' => TRUE)) . '"';
+    $block_content .= ' data-url="' . url(drupal_get_path_alias($link), array('absolute' => TRUE)) . '"';
   }
   if ($title) {
-    $block_content .= ' data-yashareTitle="' . check_plain($title) . '"';
+    $block_content .= ' data-title="' . check_plain($title) . '"';
   }
   if ($description) {
-    $block_content .= ' data-yashareDescription="' . check_plain($description) . '"';
+    $block_content .= ' data-description="' . check_plain($description) . '"';
   }
   if ($image) {
-    $block_content .= ' data-yashareImage="' . $image . '"';
+    $block_content .= ' data-image="' . $image . '"';
   }
 
-  $service_list = ' data-yashareQuickServices="';
+  $service_list = ' data-services="';
   foreach (yashare_counters_services_list() as $service_id => $service_name) {
     if (variable_get('yashare_counters_service_' . $service_id . '_enabled', 1)) {
       $service_list .= $service_id . ',';
@@ -129,9 +129,9 @@ function yashare_counters_block_content($link = NULL, $title = NULL, $descriptio
   $block_content .= $service_list;
 
   if (variable_get('yashare_counters_small_size', YASHARE_COUNTERS_SMALL)) {
-    $block_content .= ' data-yashareType="small"';
+    $block_content .= ' data-size="s"';
   }
-  $block_content .= ' data-yashareTheme="counter" /></div>';
+  $block_content .= ' data-counter /></div>';
   return $block_content;
 }
 
