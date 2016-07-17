@@ -5,7 +5,7 @@
  */
 
 // Include field hooks.
-require_once __DIR__ . '/yashare_counters.filter.inc';
+require_once __DIR__ . '/yashare_counters.fields.inc';
 
 define('YASHARE_COUNTERS_SMALL', 1);
 
