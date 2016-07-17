@@ -151,7 +151,6 @@ function yashare_counters_field_formatter_settings_form($field, $instance, $view
  * Implements hook_field_formatter_settings_summary().
  */
 function yashare_counters_field_formatter_settings_summary($field, $instance, $view_mode) {
-  $display = $instance['display'][$view_mode];
   $settings = $instance['display'][$view_mode]['settings'];
   $output = array();
 
