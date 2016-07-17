@@ -33,7 +33,6 @@ function yashare_counters_admin_settings() {
     );
     $form['services'][$service_id]['yashare_counters_service_' . $service_id . '_weight'] = array(
       '#type' => 'weight',
-      // '#title' => t('Weight'),
       '#delta' => 10,
       '#default_value' => variable_get('yashare_counters_service_' . $service_id . '_weight', 0),
       '#attributes' => array('class' => array('yashare-counters-service-weight')),
