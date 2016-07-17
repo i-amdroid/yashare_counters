@@ -55,7 +55,7 @@ function yashare_counters_field_formatter_view($entity_type, $entity, $field, $i
 
   if ($entity_type == 'node') {
     $link = 'node/' . $entity->nid;
-    $title = $entity->title;   
+    $title = $entity->title;
   }
   elseif ($entity_type == 'taxonomy_term') {
     $link = 'taxonomy/term/' . $entity->tid;
@@ -77,15 +77,16 @@ function yashare_counters_field_formatter_view($entity_type, $entity, $field, $i
         $element[$delta] = array(
           '#type' => 'html_tag',
           '#tag' => 'div',
+          '#value' => yashare_counters_block_content($link, $title, $description, $image),
           '#attached' => array(
             'js' => array(
               'https://yastatic.net/share2/share.js' => array(
                 'type' => 'external',
-                'async' => 'async', // See https://www.drupal.org/node/1664602
+                // See https://www.drupal.org/node/1664602.
+                'async' => 'async',
               ),
             ),
           ),
-          '#value' => yashare_counters_block_content($link, $title, $description, $image),
         );
       }
       break;
@@ -151,7 +152,6 @@ function yashare_counters_field_formatter_settings_form($field, $instance, $view
  * Implements hook_field_formatter_settings_summary().
  */
 function yashare_counters_field_formatter_settings_summary($field, $instance, $view_mode) {
-  $display = $instance['display'][$view_mode];
   $settings = $instance['display'][$view_mode]['settings'];
   $output = array();
 
