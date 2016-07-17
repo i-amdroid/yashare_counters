@@ -104,36 +104,38 @@ function yashare_counters_block_content($link = NULL, $title = NULL, $descriptio
   global $language_content;
   $lang = $language_content->language;
 
-  $block_content = '<div class="ya-share2"';
-  $block_content .= ' data-lang="' . $lang . '"';
+  $attributes = array();
+  $attributes['class'][] = 'ya-share2';
+  $attributes['data-lang'] = $lang;
 
   if ($link) {
-    $block_content .= ' data-url="' . url(drupal_get_path_alias($link), array('absolute' => TRUE)) . '"';
+    $attributes['data-url'] = url(drupal_get_path_alias($link), array('absolute' => TRUE));
   }
   if ($title) {
-    $block_content .= ' data-title="' . check_plain($title) . '"';
+    $attributes['data-title'] = $title;
   }
   if ($description) {
-    $block_content .= ' data-description="' . check_plain($description) . '"';
+    $attributes['data-description'] = $description;
   }
   if ($image) {
-    $block_content .= ' data-image="' . $image . '"';
+    $attributes['data-image'] = $image;
   }
 
-  $service_list = ' data-services="';
+  $service_list = '';
   foreach (yashare_counters_services_list() as $service_id => $service_name) {
     if (variable_get('yashare_counters_service_' . $service_id . '_enabled', 1)) {
       $service_list .= $service_id . ',';
     }
   }
-  $service_list .= '"';
-  $block_content .= $service_list;
+  $attributes['data-services'] = $service_list;
 
   if (variable_get('yashare_counters_small_size', YASHARE_COUNTERS_SMALL)) {
-    $block_content .= ' data-size="s"';
+    $attributes['data-size'] = 's';
   }
-  $block_content .= ' data-counter /></div>';
-  return $block_content;
+
+  $attributes['data-counter'] = 'data-counter';
+
+  return '<div' . drupal_attributes($attributes) . '></div>';
 }
 
 /**
