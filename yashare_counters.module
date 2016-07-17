@@ -10,7 +10,7 @@ module_load_include('inc', 'yashare_counters', 'yashare_counters.fields');
 define('YASHARE_COUNTERS_SMALL', 1);
 
 /**
- * Implements hook_menu(). 
+ * Implements hook_menu().
  */
 function yashare_counters_menu() {
   $items = array();
@@ -27,7 +27,7 @@ function yashare_counters_menu() {
 }
 
 /**
- * Implements hook_block_info(). 
+ * Implements hook_block_info().
  */
 function yashare_counters_block_info() {
   $blocks['yashare_counters'] = array(
@@ -42,10 +42,10 @@ function yashare_counters_block_info() {
 /**
  * Implements hook_block_configure().
  */
-function yashare_counters_block_configure($delta='') {
+function yashare_counters_block_configure($delta = '') {
   $form = array();
   switch ($delta) {
-    case 'yashare_counters' :
+    case 'yashare_counters':
       $form['fixed_url'] = array(
         '#type' => 'textfield',
         '#title' => t('Use fixed URL for buttons on all pages'),
@@ -62,14 +62,14 @@ function yashare_counters_block_configure($delta='') {
  */
 function yashare_counters_block_save($delta = '', $edit = array()) {
   switch ($delta) {
-    case 'yashare_counters' :      
+    case 'yashare_counters':
       variable_set('yashare_counters_fixed_url', $edit['fixed_url']);
       break;
   }
 }
 
 /**
- * Implements hook_block_view(). 
+ * Implements hook_block_view().
  */
 function yashare_counters_block_view($delta = '') {
   $block = array();
@@ -87,7 +87,8 @@ function yashare_counters_block_view($delta = '') {
         'js' => array(
           'https://yastatic.net/share2/share.js' => array(
             'type' => 'external',
-            'async' => 'async', // See https://www.drupal.org/node/1664602
+            // See https://www.drupal.org/node/1664602.
+            'async' => 'async',
           ),
         ),
       ),
@@ -97,7 +98,7 @@ function yashare_counters_block_view($delta = '') {
 }
 
 /**
- * Generates block content. 
+ * Generates block content.
  */
 function yashare_counters_block_content($link = NULL, $title = NULL, $description = NULL, $image = NULL) {
   global $language_content;
