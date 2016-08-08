@@ -34,6 +34,8 @@ Available services
  * Odnoklassniki
  * Moi mir
  * Vkontakte
+ * Pinterest
+ * LinkedIn
 
 Version comparison
 ------------------

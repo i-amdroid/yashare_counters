@@ -165,6 +165,8 @@ function yashare_counters_services_list() {
       'odnoklassniki' => t('Odnoklassniki'),
       'moimir' => t('Moi mir'),
       'gplus' => t('Google Plus'),
+      'pinterest' => t('Pinterest'),
+      'linkedin' => t('LinkedIn'),
     );
 
     $services = array();
