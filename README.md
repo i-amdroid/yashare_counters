@@ -8,7 +8,7 @@ This module displays Yandex.Share buttons with counters.
 INSTALLATION
 ------------
 Install as usual, see
-https://drupal.org/documentation/install/modules-themes/modules-7
+https://www.drupal.org/docs/7/extending-drupal-7/installing-contributed-modules-find-import-enable-configure-drupal-7
 for further information.
 
 CONFIGURATION
